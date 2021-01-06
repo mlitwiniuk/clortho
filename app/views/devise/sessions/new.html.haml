@@ -1,0 +1,22 @@
+= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'card card-md', data: { 'controller': 'password-toggle' } }) do |f|
+  .card-body
+    %h2.mb-5.text-center Log in
+    = render "devise/shared/error_messages", resource: resource
+    .mb-3
+      = f.label :email, 'Email', class: 'form-label'
+      = f.email_field :email, autofocus: true, placeholder: 'Enter Email', class: 'form-control'
+    .mb-3
+      = f.label :password, 'Password', class: 'form-label'
+      .input-group.input-group-flat
+        = f.password_field :password, autocomplete: "off", placeholder: 'Password', class: 'form-control', data: { password_toggle_target: 'input' }
+        %span.input-group-text{data: { action: 'click->password-toggle#togglePassword'}}
+          %i.far.fa-eye
+    - if devise_mapping.rememberable?
+      .mb-2
+        .form-check
+          %label.form-check-label
+            = f.check_box :remember_me, class: "form-check-input"
+            Remember me
+    .form-footer
+      = f.submit "Log in", class: "btn btn-primary btn-block btn-lg"
+  = render "devise/shared/links"

@@ -1,0 +1,12 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    = render 'shared/metatags'
+  %body.antialiased.border-top-wide.border-primary.d-flex.flex-column
+    = render 'shared/messages'
+    .flex-fill.d-flex.flex-column.justify-content-center
+      .container-tight.py-6
+        .text-center.mb-4
+          = link_to 'Clortho', root_path
+        = yield

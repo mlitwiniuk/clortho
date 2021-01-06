@@ -1,0 +1,10 @@
+= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, class: 'card card-md' }) do |f|
+  .card-body
+    %h2.mb-5.text-center Resend confirmation instructions
+    = devise_error_messages!
+    .mb-3
+      = f.label :email
+      = f.email_field :email, autofocus: true, class: 'form-control', value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email)
+    .form-footer
+      = f.submit "Resend confirmation instructions", class: 'btn btn-primary btn-lg btn-block'
+  = render "devise/shared/links"

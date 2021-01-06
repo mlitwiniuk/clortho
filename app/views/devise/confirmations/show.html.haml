@@ -1,0 +1,14 @@
+= form_for resource, as: resource_name, url: users_confirmation_path, method: :patch, html: {class: 'card card-md' } do |f|
+  .card-body
+    %h2.mb-5.text-center Account Activation
+    %div= devise_error_messages!
+    - if @requires_password
+      .mb-3
+        = f.label :password,'Choose a Password', class: 'form-label'
+        = f.password_field :password, placeholder: 'Password', class: 'form-control'
+      .mb-3
+        = f.label :password_confirmation, 'Password Confirmation', class: 'form-label'
+        = f.password_field :password_confirmation, placeholder: 'Password Confirmation', class: 'form-control'
+    = hidden_field_tag :confirmation_token,@confirmation_token
+    .form-footer
+      = f.submit "Activate", class: "btn btn-primary btn-block btn-lg"

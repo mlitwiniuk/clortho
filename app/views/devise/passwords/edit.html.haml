@@ -1,0 +1,17 @@
+= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: 'card card-md' }) do |f|
+  .card-body
+    %h2.md-5.text-center Change your password
+    = render "devise/shared/error_messages", resource: resource
+    = f.hidden_field :reset_password_token
+    .mb-3
+      = f.label :password, 'Password', class: 'form-label'
+      .input-group.input-group-flat
+        = f.password_field :password, autocomplete: "off", placeholder: 'Password', class: 'form-control', data: { password_toggle_target: 'input' }
+        %span.input-group-text{data: { action: 'click->password-toggle#togglePassword'}}
+          %i.far.fa-eye
+    .mb-3
+      = f.label :password_confirmation, 'Password', class: 'form-label'
+      = f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: 'Confirm Password'
+    .form-footer
+      = f.submit "Change my password", class: "btn btn-primary btn-block btn-lg"
+  = render "devise/shared/links"

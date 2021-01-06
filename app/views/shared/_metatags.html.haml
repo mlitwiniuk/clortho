@@ -1,0 +1,35 @@
+%title= h sanitize current_title
+%link{:href => "#{h current_url}", :rel => "canonical"}/
+- if content_for?(:image)
+  %link{:href => "#{content_for(:image)}", :rel => "image_src"}/
+%meta{:charset => "utf-8"}/
+%meta{:content => "IE=Edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
+%meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+%meta{:content => "#{h content_for_or(:robot, 'INDEX,FOLLOW')}", :name => "robots"}/
+%meta{:content => "#{h content_for_or(:description, '')}", :name => "description"}/
+%meta{:content => "#{h content_for_or(:keywords, '')}", :name => "keywords"}/
+%meta{:content => "#777777", :name => "theme-color"}/
+%meta{:content => "#{h current_url}", :property => "og:url"}/
+%meta{:content => current_site, :property => "og:site_name"}/
+%meta{:content => "#{h content_for_or(:type, 'website')}", :property => "og:type"}/
+%meta{:content => "#{h current_title}", :property => "og:title"}/
+%meta{:content => "#{h content_for_or(:description, '')}", :property => "og:description"}/
+- if content_for?(:image)
+  %meta{:content => "#{content_for(:image)}", :property => "og:image"}/
+- if content_for?(:video)
+  %meta{:content => "#{content_for(:video)}", :property => "og:video"}/
+%meta{:content => "summary", :name => "twitter:card"}/
+%meta{:content => "#{ENV['APP_TWITTER']}", :name => "twitter:site"}/
+%meta{:content => "#{ENV['APP_TWITTER']}", :name => "twitter:creator"}/
+%meta{:content => "#{h current_title}", :name => "twitter:title"}/
+%meta{:content => "#{h content_for_or(:description, '')}", :name => "twitter:description"}/
+%meta{:content => "#{h current_url}", :name => "twitter:url"}/
+- if content_for?(:image)
+  %meta{:content => "#{content_for(:image)}", :name => "twitter:image"}/
+= auto_discovery_link_tag(:rss, content_for(:rss), {title: "RSS Feed"}) if content_for?(:rss)
+= auto_discovery_link_tag(:atom, content_for(:atom), {title: "Atom Feed"}) if content_for?(:atom)
+= stylesheet_pack_tag 'application', preload: true, media: 'all', 'data-turbolinks-track': 'reload'
+= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+= csrf_meta_tags
+= csp_meta_tag
+= action_cable_meta_tag

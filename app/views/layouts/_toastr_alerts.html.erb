@@ -1,0 +1,7 @@
+<script>
+  toastr.options.closeButton = true;
+  toastr.options.progressBar = true;
+  <% flash.each do |k, v| %>
+    toastr["<%= k == 'notice' ? 'success' : 'warning' %>"]("<%= j v %>");
+  <% end %>
+</script>

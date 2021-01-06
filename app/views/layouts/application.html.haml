@@ -1,0 +1,12 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    = render 'shared/metatags'
+  %body{class: "antialiased #{body_class(params)}"}
+    .page
+      = render 'shared/navbar'
+      .content
+        .container-xl
+          = render 'shared/messages'
+          = yield

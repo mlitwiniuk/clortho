@@ -1,0 +1,10 @@
+= form_for(resource, as: resource_name, url: user_unlock_path, html: { method: :post, class: 'card card-md' }) do |f|
+  .card-body
+    %h2.md-5.text-center Resend unlock instructions
+    = render "devise/shared/error_messages", resource: resource
+    .mb-3
+      = f.label :email, 'Email', class: 'form-label'
+      = f.email_field :email, autofocus: false, class: 'form-control', placeholder: "Email Address"
+    .form-footer
+      = f.submit "Resend unlock instructions", class: 'btn btn-primary btn-block btn-lg'
+  = render "devise/shared/links"
