@@ -1,0 +1,2 @@
+---
+keyfile_url_pattern: 'https://github.com/${USERNAME}.keys'

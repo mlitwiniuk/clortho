@@ -70,3 +70,5 @@ gem 'devise-pwned_password'
 gem "friendly_id", "~> 5.4"
 
 gem "haml", "~> 5.2"
+
+gem 'config'
