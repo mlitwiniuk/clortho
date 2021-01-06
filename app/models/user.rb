@@ -16,6 +16,7 @@
 #  reset_password_token   :string
 #  sign_in_count          :integer          default(0), not null
 #  unlock_token           :string
+#  username               :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -30,4 +31,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :lockable, :timeoutable,
          :recoverable, :rememberable, :validatable, :pwned_password
+
+  ## VALIDATIONS
+  validates :username, uniqueness: true
+
+  def to_s
+    username || email
+  end
 end

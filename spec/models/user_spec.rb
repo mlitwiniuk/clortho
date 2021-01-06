@@ -16,6 +16,7 @@
 #  reset_password_token   :string
 #  sign_in_count          :integer          default(0), not null
 #  unlock_token           :string
+#  username               :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
@@ -29,4 +30,5 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   it { is_expected.to validate_presence_of(:email) }
+  it { is_expected.to validate_uniqueness_of(:username) }
 end

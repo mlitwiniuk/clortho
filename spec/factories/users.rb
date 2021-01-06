@@ -16,6 +16,7 @@
 #  reset_password_token   :string
 #  sign_in_count          :integer          default(0), not null
 #  unlock_token           :string
+#  username               :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #

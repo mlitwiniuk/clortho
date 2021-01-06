@@ -10,6 +10,9 @@
       .alert.alert-warning
         = "Currently waiting confirmation for: #{resource.unconfirmed_email}"
     .mb-2
+      = f.label :username
+      = f.text_field :username, class: 'form-control', placeholder: 'Repo username'
+    .mb-2
       %a.text-primary{data: { target: 'display-toggle.trigger', action: 'display-toggle#toggleVisibility'}}
         %i.fa.fa-lock
         Change password
