@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { registrations: 'users/registrations' }
+  devise_for :users, controllers: { registrations: 'users/registrations' }, path: 'accounts'
+  authenticated :user do
+    resources :users
+  end
 
   match 'bad-request', to: 'errors#bad_request', as: 'bad_request', via: :all
   match 'not_authorized', to: 'errors#not_authorized', as: 'not_authorized', via: :all

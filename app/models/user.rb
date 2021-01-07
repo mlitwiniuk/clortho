@@ -33,7 +33,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :pwned_password
 
   ## VALIDATIONS
-  validates :username, uniqueness: true
+  validates :username, uniqueness: true, if: :username?
 
   def to_s
     username || email

@@ -6,10 +6,11 @@
       %span.navbar-toggler-icon
     #navbarContent.collapse.navbar-collapse
       %ul.navbar-nav
-        = link_to "Page", "#", class: "nav-link"
+        - if user_signed_in?
+          = link_to "Users", users_path, class: "nav-link"
       %ul.navbar-nav.ml-auto
         - if user_signed_in?
-          = link_to "Logout", destroy_user_session_path, class: "nav-link"
+          = link_to "Logout", destroy_user_session_path, class: "nav-link", method: :delete
         - else
           = link_to "Login", new_user_session_path, class: "nav-link"
           = link_to "Register", new_user_registration_path, class: "nav-link"

@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-header justify-content-between">
+    <h3 class="card-title">
+      Editing <%%= @<%= singular_table_name %>.to_s %>
+    </h3>
+    <span>
+      <%%= link_to <%= index_helper %>_path, class: 'btn btn-link' do %>
+        All <%= plural_table_name.capitalize %>
+      <%% end %>
+      /
+      <%%= link_to <%= singular_table_name %>_path(@<%= singular_table_name %>), class: 'btn btn-link' do %>
+        Overview
+      <%% end %>
+    </span>
+  </div>
+  <div class="card-body">
+    <%%= render 'form' , <%= singular_table_name %>: @<%= singular_table_name %> %>
+  </div>
+</div>

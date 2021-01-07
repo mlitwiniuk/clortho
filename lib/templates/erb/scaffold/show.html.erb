@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-header justify-content-between">
+    <h3 class="card-title">Show <%= singular_table_name %></h3>
+    <span>
+      <%%= link_to <%= index_helper %>_path, class: 'btn btn-link' do %>
+        All <%= plural_table_name.capitalize %>
+      <%% end %>
+      /
+      <%%= link_to edit_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: 'btn btn-link' do %>
+        Edit
+      <%% end %>
+    </span>
+  </div>
+  <div class="card-body">
+    <dl class="dl-horizontal">
+      <%- attributes.each do |attribute| -%>
+      <dt><%= attribute.human_name %>:</dt>
+      <dd><%%= @<%= singular_table_name %>.<%= attribute.name %> %></dd>
+
+      <%- end -%>
+    </dl>
+  </div>
+</div>
+

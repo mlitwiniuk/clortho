@@ -1,0 +1,39 @@
+<%= form_with(model: user, local: true, html: { class: '' }) do |form| %>
+<% if user.errors.any? %>
+<div id="error_explanation" class="mb-2">
+  <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+  <ul>
+    <% user.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<div class="mb-2">
+  <%= form.label :email %>
+  <%= form.text_field :email, class: 'form-control' %>
+</div>
+
+<div class="mb-2">
+  <%= form.label :username %>
+  <%= form.text_field :username, class: 'form-control' %>
+</div>
+
+<div class="form-footer">
+  <div class="d-flex justify-content-between">
+    <% if user.persisted? %>
+    <%= link_to 'Destroy', user, method: :delete, class: "btn btn-link text-danger", data: { confirm: 'Are you sure?' } %>
+    <% end %>
+
+    <%= form.submit class: 'btn btn-primary ' %>
+
+    <% if user.persisted? %>
+    <%= link_to "Cancel", user, class: "btn btn-link" %>
+    <% else %>
+    <%= link_to "Cancel", users_path, class: "btn btn-link" %>
+    <% end %>
+  </div>
+</div>
+<% end %>
