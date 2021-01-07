@@ -10,10 +10,10 @@ module ApplicationHelper
   def current_title
     title = []
     title << current_site
-    if content_for?(:title)
-      title << content_for(:title)
+    title << if content_for?(:title)
+      content_for(:title)
     else
-      title << params[:controller].split("/").last.titleize
+      params[:controller].split("/").last.titleize
     end
     title.uniq.join(" | ")
   end
@@ -22,15 +22,15 @@ module ApplicationHelper
     content_for :"meta_#{tag}", text
   end
 
-  def yield_meta_tag(tag, default_text="")
+  def yield_meta_tag(tag, default_text = "")
     content_for?(:"meta_#{tag}") ? content_for(:"meta_#{tag}") : default_text
   end
 
-  def title(elements=[])
-    content_for :title, elements.compact.map{ |a| a.try(:name) || a.try(:title) || a.try(:id) || a.to_s.capitalize }.join(" | ")
+  def title(elements = [])
+    content_for :title, elements.compact.map { |a| a.try(:name) || a.try(:title) || a.try(:id) || a.to_s.capitalize }.join(" | ")
   end
 
-  def description(description="")
+  def description(description = "")
     content_for :description, description
   end
 
@@ -42,17 +42,15 @@ module ApplicationHelper
     unless string.blank?
       stripped = strip_tags(string)
       decoded = HTMLEntities.new.decode(stripped)
-      decoded.squish.gsub(%r{/<\/?[^>]*>/}, "")
+      decoded.squish.gsub(%r{/</?[^>]*>/}, "")
     end
   end
 
   def route_exists?(path)
-    begin
-      recognize_path = Rails.application.routes.recognize_path(path, method: :get)
-      recognize_path.present? && recognize_path[:action] != "route_not_found"
-    rescue StandardError
-      false
-    end
+    recognize_path = Rails.application.routes.recognize_path(path, method: :get)
+    recognize_path.present? && recognize_path[:action] != "route_not_found"
+  rescue
+    false
   end
 
   def content_for_or(name, default)
@@ -68,14 +66,14 @@ module ApplicationHelper
     return unless params[:controller]
     if params[:controller].include?("/")
       body << params[:controller].split("/").first
-      body << params[:controller].gsub("/", "-")
+      body << params[:controller].tr("/", "-")
     else
       body << params[:controller]
     end
-    if params[:controller].include?("/")
-      body << "#{params[:controller].gsub("/", "-")}-#{params[:action]}"
+    body << if params[:controller].include?("/")
+      "#{params[:controller].tr("/", "-")}-#{params[:action]}"
     else
-      body << "#{params[:controller]}-#{params[:action]}"
+      "#{params[:controller]}-#{params[:action]}"
     end
     if params.key?(:page)
       body << "#{params[:controller]}-#{params[:action]}-#{params[:page]}"

@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_account_update_params, only: [:update]
 
   def edit
-    render layout: 'application'
+    render layout: "application"
   end
 
   # If you have extra params to permit, append them to the sanitizer.

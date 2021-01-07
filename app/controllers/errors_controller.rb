@@ -1,5 +1,4 @@
 class ErrorsController < ApplicationController
-
   def bad_request
     render(status: 400)
   end
@@ -31,6 +30,4 @@ class ErrorsController < ApplicationController
   def service_unavailable
     render(status: 500)
   end
-
 end
-
