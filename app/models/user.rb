@@ -32,6 +32,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :lockable, :timeoutable,
     :recoverable, :rememberable, :validatable, :pwned_password
 
+  ## ASSOCIATIONS
+  has_many :ssh_keys, dependent: :destroy
+
   ## VALIDATIONS
   validates :username, uniqueness: true, if: :username?
 
