@@ -1,0 +1,12 @@
+.card
+  .card-header.justify-content-between
+    %h3.card-title
+      = link_to @user do
+        = @user.to_s
+      &raquo;
+      New ssh_key
+    %span
+      = link_to @user, class: 'btn btn-link' do
+        Back to user
+  .card-body
+    = render 'form' , ssh_key: @ssh_key, user: @user

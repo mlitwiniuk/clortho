@@ -1,0 +1,24 @@
+.card
+  .card-header.justify-content-between
+    %h3.card-title
+      Users
+    = link_to new_user_path, class: 'btn btn-link' do
+      %em.fa.fa-plus
+      Add New User
+  .card-body
+    .table-responsive
+      %table.table.table-striped.table-bordered.table-hover
+        %thead
+          %tr
+            %th Email
+            %th Username
+            %th
+        %tbody
+          - @users.each do |user|
+            = content_tag :tr, id: dom_id(user), class: dom_class(user) do
+              %td
+                = user.email
+              %td
+                = user.username
+              %td
+                = link_to 'Show' , user

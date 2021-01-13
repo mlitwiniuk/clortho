@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {registrations: "users/registrations"}, path: "accounts"
   authenticated :user do
-    resources :users
+    resources :users do
+      resources :ssh_keys, only: %i[new create destroy]
+    end
   end
 
   match "bad-request", to: "errors#bad_request", as: "bad_request", via: :all

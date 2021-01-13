@@ -1,0 +1,21 @@
+= form_with(model: [user, ssh_key], local: true, html: { class: '' }) do |form|
+  - if ssh_key.errors.any?
+    #error_explanation.mb-2
+      %h2
+        = pluralize(ssh_key.errors.count, "error")
+        prohibited this SSH key from being saved:
+      %ul
+        - ssh_key.errors.full_messages.each do |message|
+          %li= message
+  .mb-2
+    = form.label :identifier
+    = form.text_field :identifier, class: 'form-control'
+  .mb-2
+    = form.label :key
+    = form.text_area :key, class: 'form-control'
+  .form-footer
+    .d-flex.justify-content-between
+      - if ssh_key.persisted?
+        = link_to 'Destroy', [user, ssh_key], method: :delete, class: "btn btn-link text-danger", data: { confirm: 'Are you sure?' }
+      = form.submit class: 'btn btn-primary '
+      = link_to "Cancel", [user], class: "btn btn-link"

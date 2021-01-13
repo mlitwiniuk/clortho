@@ -1,0 +1,17 @@
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Identifier
+        %th SSH Key
+        %th
+    %tbody
+      - ssh_keys.each do |ssh_key|
+        = content_tag :tr, id: dom_id(ssh_key), class: dom_class(ssh_key) do
+          %td
+            = ssh_key.identifier
+          %td
+            %pre= ssh_key.key
+          %td
+            = link_to [ssh_key.user, ssh_key], method: :delete, data: { confirm: 'You sure, homie?' } do
+              %i.fa.fa-trash

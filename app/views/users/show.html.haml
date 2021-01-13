@@ -1,0 +1,24 @@
+.card.mb-3
+  .card-header.justify-content-between
+    %h3.card-title= @user.to_s
+    %span
+      = link_to users_path, class: 'btn btn-link' do
+        All Users
+      \/
+      = link_to edit_user_path(@user), class: 'btn btn-link' do
+        Edit
+  .card-body
+    %dl.dl-horizontal
+      %dt Email:
+      %dd= @user.email
+      %dt Username:
+      %dd= @user.username
+
+.card
+  .card-header.justify-content-between
+    %h3.card-title SSH Keys
+    %span
+      = link_to [:new, @user, :ssh_key], class: 'btn btn-link' do
+        New SSH key
+  .card-body
+    = render partial: 'ssh_keys/table', locals: { ssh_keys: @user.ssh_keys }

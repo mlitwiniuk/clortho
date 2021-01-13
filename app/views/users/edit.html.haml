@@ -1,0 +1,12 @@
+.card
+  .card-header.justify-content-between
+    %h3.card-title
+      Editing #{@user.to_s}
+    %span
+      = link_to users_path, class: 'btn btn-link' do
+        All Users
+      \/
+      = link_to user_path(@user), class: 'btn btn-link' do
+        Overview
+  .card-body
+    = render 'form' , user: @user
