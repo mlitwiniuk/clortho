@@ -1,0 +1,19 @@
+.card
+  .card-header.justify-content-between
+    %h3.card-title Show server
+    %span
+      = link_to servers_path, class: 'btn btn-link' do
+        All Servers
+      \/
+      = link_to edit_server_path(@server), class: 'btn btn-link' do
+        Edit
+  .card-body
+    %dl.dl-horizontal
+      %dt Identifier:
+      %dd= @server.identifier
+      %dt Host:
+      %dd= @server.host
+      %dt Port:
+      %dd= @server.port
+      %dt User:
+      %dd= @server.user

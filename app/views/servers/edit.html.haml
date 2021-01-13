@@ -1,0 +1,12 @@
+.card
+  .card-header.justify-content-between
+    %h3.card-title
+      Editing #{@server.to_s}
+    %span
+      = link_to servers_path, class: 'btn btn-link' do
+        All Servers
+      \/
+      = link_to server_path(@server), class: 'btn btn-link' do
+        Overview
+  .card-body
+    = render 'form' , server: @server

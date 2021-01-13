@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :servers
   devise_for :users, controllers: {registrations: "users/registrations"}, path: "accounts"
   authenticated :user do
     resources :users do

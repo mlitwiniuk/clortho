@@ -1,0 +1,30 @@
+= form_with(model: server, local: true, html: { class: '' }) do |form|
+  - if server.errors.any?
+    #error_explanation.mb-2
+      %h2
+        = pluralize(server.errors.count, "error")
+        prohibited this server from being saved:
+      %ul
+        - server.errors.full_messages.each do |message|
+          %li= message
+  .mb-2
+    = form.label :identifier
+    = form.text_field :identifier, class: 'form-control'
+  .mb-2
+    = form.label :host
+    = form.text_field :host, class: 'form-control'
+  .mb-2
+    = form.label :port
+    = form.text_field :port, class: 'form-control'
+  .mb-2
+    = form.label :user
+    = form.text_field :user, class: 'form-control'
+  .form-footer
+    .d-flex.justify-content-between
+      - if server.persisted?
+        = link_to 'Destroy', server, method: :delete, class: "btn btn-link text-danger", data: { confirm: 'Are you sure?' }
+      = form.submit class: 'btn btn-primary '
+      - if server.persisted?
+        = link_to "Cancel", server, class: "btn btn-link"
+      - else
+        = link_to "Cancel", servers_path, class: "btn btn-link"
