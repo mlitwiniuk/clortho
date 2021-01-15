@@ -21,7 +21,7 @@
 FactoryBot.define do
   factory :ssh_key do
     association(:user)
-    key { "MyText" }
+    sequence(:key) { |n| "Key #{n}" }
     is_active { true }
     trait :with_identifier do
       sequence(:identifier) { |n| "Key #{n}"}

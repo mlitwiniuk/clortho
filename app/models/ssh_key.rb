@@ -46,6 +46,7 @@ class SshKey < ApplicationRecord
     return if identifier.present?
     return unless user.present?
 
-    self.identifier = "Key #{user.ssh_keys.count + 1}"
+    last_id = owner.ssh_keys.last&.identifier&.split(' ')&.last.to_i
+    self.identifier = "#{owner_type} Key #{last_id + 1}"
   end
 end

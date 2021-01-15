@@ -39,5 +39,17 @@ RSpec.describe SshKey, type: :model do
       expect(key).to be_valid
       expect(key.identifier).to eq('Key 1')
     end
+
+    it 'avoid same names' do
+      first = create(:ssh_key, owner: user)
+      second = create(:ssh_key, owner: user)
+      expect(second.identifier).to eq('User Key 2')
+      first.destroy
+      third = create(:ssh_key, owner: user)
+      expect(third.identifier).to eq('User Key 3')
+      third.destroy
+      fourth = create(:ssh_key, owner: user)
+      expect(fourth.identifier).to eq('User Key 3')
+    end
   end
 end
