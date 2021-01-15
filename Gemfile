@@ -77,3 +77,6 @@ gem "config"
 
 gem 'simple_command'
 gem 'http'
+gem 'sshkit'
+gem 'ed25519'
+gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
