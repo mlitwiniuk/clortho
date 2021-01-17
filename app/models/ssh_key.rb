@@ -37,6 +37,7 @@ class SshKey < ApplicationRecord
 
   def self.find_by_key(key)
     # TODO: this has to be clever, right now key beginning with give should be enough
+    key = key.split[0, 2].join(' ')
     where('key like ?', "#{key}%").first
   end
 

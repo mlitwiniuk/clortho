@@ -23,4 +23,15 @@ class Servers::ConnService
     end
     ret
   end
+
+  def update_keys
+    keys = @server.plain_keys
+    on [@server.full_address] do
+      execute(:echo, "'' > ~/authorized_keys_tmp")
+      keys.each do |key|
+        execute(:echo, "\"#{key}\" >> ~/authorized_keys_tmp")
+      end
+      execute(:mv, '~/authorized_keys_tmp', '~/.ssh/authorized_keys')
+    end
+  end
 end

@@ -40,6 +40,11 @@ RSpec.describe SshKey, type: :model do
       k = create(:ssh_key, key: 'foo_bar')
       expect(SshKey.find_by_key('foo')).to eq(k)
     end
+
+    it 'splits key and takes first two parts to find it' do
+      k = create(:ssh_key, key: 'foo bar bak')
+      expect(SshKey.find_by_key('foo bar baz')).to eq(k)
+    end
   end
 
   describe '.fill_in_identifier' do

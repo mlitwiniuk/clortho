@@ -40,8 +40,7 @@ class Server < ApplicationRecord
   end
 
   def plain_keys
-    keys = user_keys.pluck(:key) | ssh_keys.pluck(:key)
-    keys.join("\n")
+    user_keys.pluck(:key) | ssh_keys.pluck(:key)
   end
 
   private

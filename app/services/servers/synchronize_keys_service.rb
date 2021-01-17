@@ -7,6 +7,7 @@ class Servers::SynchronizeKeysService
   def perform
     fetch_existing_keys
     create_missing_keys
+    upload_keys
   end
 
   def fetch_existing_keys
@@ -31,5 +32,9 @@ class Servers::SynchronizeKeysService
         ssh_key.servers << @server
       end
     end
+  end
+
+  def upload_keys
+    @server.conn_service.update_keys
   end
 end

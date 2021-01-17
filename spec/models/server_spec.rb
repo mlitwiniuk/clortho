@@ -32,13 +32,13 @@ RSpec.describe Server, type: :model do
   end
 
   describe '.plain_keys' do
-    it 'returns array of keys as string' do
+    it 'returns array of keysg' do
       user = create(:user)
       server.users << user
       create(:ssh_key, user: user, key: 'user_key')
       server_key = create(:ssh_key, key: 'server_key')
       server.ssh_keys << server_key
-      a = "user_key\nserver_key"
+      a = %w[user_key server_key]
       expect(server.plain_keys).to eq(a)
     end
   end
