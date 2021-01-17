@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_201725) do
+ActiveRecord::Schema.define(version: 2021_01_16_161605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,13 +35,23 @@ ActiveRecord::Schema.define(version: 2021_01_13_201725) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "ssh_keys", force: :cascade do |t|
+  create_table "servers_ssh_keys", id: false, force: :cascade do |t|
+    t.bigint "server_id", null: false
+    t.bigint "ssh_key_id", null: false
+  end
+
+  create_table "servers_users", id: false, force: :cascade do |t|
+    t.bigint "server_id", null: false
     t.bigint "user_id", null: false
+  end
+
+  create_table "ssh_keys", force: :cascade do |t|
     t.string "identifier"
     t.text "key"
     t.boolean "is_active"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_ssh_keys_on_user_id"
   end
 
@@ -67,5 +77,4 @@ ActiveRecord::Schema.define(version: 2021_01_13_201725) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  add_foreign_key "ssh_keys", "users"
 end

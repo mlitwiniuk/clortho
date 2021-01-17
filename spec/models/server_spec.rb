@@ -13,11 +13,16 @@
 require 'rails_helper'
 
 RSpec.describe Server, type: :model do
-  it { is_expected.to validate_presence_of(:host) }
-  it { is_expected.to validate_presence_of(:identifier) }
-  it { is_expected.to validate_presence_of(:port) }
-  it { is_expected.to validate_numericality_of(:port).only_integer.is_greater_than(0) }
-  it { is_expected.to validate_presence_of(:user) }
+  it { is_expected.to have_and_belong_to_many(:ssh_keys) }
+  it { is_expected.to have_and_belong_to_many(:users) }
+
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:host) }
+    it { is_expected.to validate_presence_of(:identifier) }
+    it { is_expected.to validate_presence_of(:port) }
+    it { is_expected.to validate_numericality_of(:port).only_integer.is_greater_than(0) }
+    it { is_expected.to validate_presence_of(:user) }
+  end
 
   let(:server) { create(:server) }
   it 'returns full address' do

@@ -10,15 +10,11 @@
 #  key        :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  user_id    :bigint           not null
+#  user_id    :bigint
 #
 # Indexes
 #
 #  index_ssh_keys_on_user_id  (user_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (user_id => users.id)
 #
 class SshKey < ApplicationRecord
   ## SCOPES
@@ -26,7 +22,8 @@ class SshKey < ApplicationRecord
   ## CONSTANTS
   ## ATTRIBUTES & RELATED
   ## ASSOCIATIONS
-  belongs_to :user
+  belongs_to :user, optional: true
+  has_and_belongs_to_many :servers
   ## VALIDATIONS
   validates :identifier, presence: true
   validates :key, presence: true, uniqueness: true
@@ -44,9 +41,9 @@ class SshKey < ApplicationRecord
 
   def fill_in_identifier
     return if identifier.present?
-    return unless user.present?
 
-    last_id = owner.ssh_keys.last&.identifier&.split(' ')&.last.to_i
-    self.identifier = "#{owner_type} Key #{last_id + 1}"
+    scope = user.present? ? user.ssh_keys : SshKey.where(user_id: nil)
+    last_id = scope.last&.identifier&.split(' ')&.last.to_i
+    self.identifier = "Key #{last_id + 1}"
   end
 end

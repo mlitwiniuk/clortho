@@ -18,6 +18,10 @@ class Server < ApplicationRecord
   ## CONSTANTS
   ## ATTRIBUTES & RELATED
   ## ASSOCIATIONS
+  has_and_belongs_to_many :ssh_keys
+  has_and_belongs_to_many :users
+  has_many :user_keys, class_name: 'SshKey', through: :users, source: :ssh_keys
+
   ## VALIDATIONS
   validates :host, :identifier, :user,
             presence: true
@@ -31,8 +35,11 @@ class Server < ApplicationRecord
     "#{user}@#{host}:#{port}"
   end
 
+  def conn_service
+    Servers::ConnService.new(self)
+  end
+
   private
 
   ## callback methods
 end
-
