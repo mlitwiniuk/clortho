@@ -35,6 +35,13 @@ RSpec.describe SshKey, type: :model do
     end
   end
 
+  describe '#find_by_pub_key' do
+    it 'properly finds key' do
+      k = create(:ssh_key, key: 'foo_bar')
+      expect(SshKey.find_by_key('foo')).to eq(k)
+    end
+  end
+
   describe '.fill_in_identifier' do
     it "fills in identifier if it's blank" do
       key = build(:ssh_key, user: user)

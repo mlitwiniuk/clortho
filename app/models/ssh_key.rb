@@ -35,6 +35,11 @@ class SshKey < ApplicationRecord
     identifier
   end
 
+  def self.find_by_key(key)
+    # TODO: this has to be clever, right now key beginning with give should be enough
+    where('key like ?', "#{key}%").first
+  end
+
   private
 
   ## callback methods

@@ -15,7 +15,7 @@ class Servers::SynchronizeKeysService
 
   def create_missing_keys
     @keys.each do |k|
-      ssh_key = SshKey.find_by(key: k)
+      ssh_key = SshKey.find_by_key(k)
       if ssh_key
         if ssh_key.user.present?
           next if ssh_key.user.servers.member?(@server)

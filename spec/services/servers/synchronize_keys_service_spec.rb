@@ -5,7 +5,7 @@ describe Servers::SynchronizeKeysService do
   let(:user) { create(:user) }
   let(:user_key) { create(:ssh_key, user: user, key: 'test')}
   let(:server_key) do
-    key = create(:ssh_key, key: 'test2')
+    key = create(:ssh_key, key: 'other_test')
     key.servers << server
     key
   end
@@ -53,7 +53,7 @@ describe Servers::SynchronizeKeysService do
     server_key
     expect(server.users.count).to eq(0)
     expect(server.ssh_keys.to_a).to eq([server_key])
-    mock = OpenStruct.new(plain_keys: 'test2')
+    mock = OpenStruct.new(plain_keys: 'other_test')
     allow(server).to receive(:conn_service).and_return(mock)
     expect{
       described_class.new(server).perform
@@ -62,7 +62,7 @@ describe Servers::SynchronizeKeysService do
   end
 
   it 'adds key to server' do
-    key = create(:ssh_key, key: 'test2', user: nil).reload
+    key = create(:ssh_key, key: 'other_test', user: nil).reload
     expect(server.users.count).to eq(0)
     expect(server.ssh_keys.count).to eq(0)
     mock = OpenStruct.new(plain_keys: key.key)
