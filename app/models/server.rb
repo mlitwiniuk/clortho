@@ -39,6 +39,11 @@ class Server < ApplicationRecord
     Servers::ConnService.new(self)
   end
 
+  def plain_keys
+    keys = user_keys.pluck(:key) | ssh_keys.pluck(:key)
+    keys.join("\n")
+  end
+
   private
 
   ## callback methods

@@ -25,7 +25,22 @@ RSpec.describe Server, type: :model do
   end
 
   let(:server) { create(:server) }
-  it 'returns full address' do
-    expect(server.full_address).to eq('deploy@prograils.io:22')
+  describe '.full_address' do
+    it 'returns full address' do
+      expect(server.full_address).to eq('deploy@prograils.io:22')
+    end
   end
+
+  describe '.plain_keys' do
+    it 'returns array of keys as string' do
+      user = create(:user)
+      server.users << user
+      create(:ssh_key, user: user, key: 'user_key')
+      server_key = create(:ssh_key, key: 'server_key')
+      server.ssh_keys << server_key
+      a = "user_key\nserver_key"
+      expect(server.plain_keys).to eq(a)
+    end
+  end
+
 end
