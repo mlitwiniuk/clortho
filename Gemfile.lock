@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/bensie/sshkey.git
+  revision: 6fd399213edd8611c1e540064d42d16b5e712782
+  ref: 6fd399213edd8611c1e540064d42d16b5e712782
+  branch: ec
+  specs:
+    sshkey (2.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -417,6 +425,7 @@ DEPENDENCIES
   simple_command
   simplecov
   spring
+  sshkey!
   sshkit
   standard
   turbolinks (~> 5)

@@ -4,17 +4,19 @@
 #
 # Table name: ssh_keys
 #
-#  id         :bigint           not null, primary key
-#  identifier :string
-#  is_active  :boolean
-#  key        :text
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :bigint
+#  id          :bigint           not null, primary key
+#  fingerprint :string
+#  identifier  :string
+#  is_active   :boolean
+#  key         :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  user_id     :bigint
 #
 # Indexes
 #
-#  index_ssh_keys_on_user_id  (user_id)
+#  index_ssh_keys_on_fingerprint  (fingerprint) UNIQUE
+#  index_ssh_keys_on_user_id      (user_id)
 #
 class SshKey < ApplicationRecord
   ## SCOPES
@@ -24,11 +26,15 @@ class SshKey < ApplicationRecord
   ## ASSOCIATIONS
   belongs_to :user, optional: true
   has_and_belongs_to_many :servers
+
   ## VALIDATIONS
   validates :identifier, presence: true
   validates :key, presence: true, uniqueness: true
+
   ## CALLBACKS
   before_validation :fill_in_identifier
+  before_validation :calculate_fingerprint
+
   ## OTHER
 
   def to_s
@@ -36,14 +42,36 @@ class SshKey < ApplicationRecord
   end
 
   def self.find_by_key(key)
-    # TODO: this has to be clever, right now key beginning with give should be enough
-    key = key.split[0, 2].join(' ')
-    where('key like ?', "#{key}%").first
+    fingerprint = ::SSHKey.fingerprint key
+    find_by(fingerprint: fingerprint)
+  end
+
+  def self.find_or_initialize_by_key(key)
+    k = find_by_key(key)
+    return k if k
+
+    new(key: key)
+  end
+
+  def self.find_or_create_by_key(key)
+    k = find_by_key(key)
+    return k if k
+
+    create(key: key)
   end
 
   private
 
   ## callback methods
+
+  def calculate_fingerprint
+    return unless key.present?
+    return unless key_changed?
+
+    self.fingerprint = ::SSHKey.fingerprint key
+  rescue ::SSHKey::PublicKeyError => e
+    errors.add(:key, e.to_s)
+  end
 
   def fill_in_identifier
     return if identifier.present?

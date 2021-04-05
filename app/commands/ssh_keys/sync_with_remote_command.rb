@@ -13,8 +13,9 @@ class SshKeys::SyncWithRemoteCommand
       body = response.body.to_s
       keys = body.split("\n").map(&:strip)
       keys.each do |k|
-        key = SshKey.find_or_create_by(key: k)
-        key.update(user: @user) if key.user.blank?
+        key = SshKey.find_or_initialize_by_key(k)
+        key.user ||= @user
+        key.save
       end
     else
       errors.add(:base, "#{response.code} #{response.reason}")

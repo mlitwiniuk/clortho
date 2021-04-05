@@ -81,3 +81,5 @@ gem 'http'
 gem 'sshkit'
 gem 'ed25519'
 gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
+
+gem 'sshkey', github: 'bensie/sshkey', branch: 'ec', ref: '6fd399213edd8611c1e540064d42d16b5e712782'

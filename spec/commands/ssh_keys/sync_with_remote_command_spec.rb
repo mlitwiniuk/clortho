@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe SshKeys::SyncWithRemoteCommand do
   let(:user) { create(:user) }
-  let(:fake_key) { 'a key' }
+  let(:fake_key) { File.open(Rails.root.join('spec', 'fixtures', 'files', 'ed25519_2.pub')).read.strip }
 
   context 'returning (with success) fake key' do
     before { stub_request(:any, "https://github.com/#{user.username}.keys").to_return(body: fake_key) }
