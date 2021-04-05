@@ -14,7 +14,7 @@
       %dt Username:
       %dd= @user.username
 
-.card
+.card.mb-3
   .card-header.justify-content-between
     %h3.card-title SSH Keys
     %span
@@ -24,4 +24,10 @@
       = link_to [:new, @user, :ssh_key], class: 'btn btn-link' do
         New SSH key
   .card-body
-    = render partial: 'ssh_keys/table', locals: { ssh_keys: @user.ssh_keys }
+    = render partial: 'ssh_keys/table', locals: { ssh_keys: @user.ssh_keys, user: @user }
+
+.card
+  .card-header.justify-content-between
+    %h3.card-title Servers
+  .card-body
+    = render partial: 'servers/table', locals: { servers: @user.servers }

@@ -34,6 +34,7 @@ class User < ApplicationRecord
 
   ## ASSOCIATIONS
   has_many :ssh_keys, dependent: :destroy
+  has_many :servers, -> { distinct }, through: :ssh_keys
 
   ## VALIDATIONS
   validates :username, uniqueness: true, if: :username?

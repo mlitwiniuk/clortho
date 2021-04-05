@@ -17,5 +17,6 @@
           %td
             %pre= ssh_key.key
           %td
-            = link_to [ssh_key], method: :delete, data: { confirm: 'You sure, homie? This will delete the KEY!' } do
-              %i.fa.fa-trash
+            - if ssh_key.user.blank? || (defined?(user) && ssh_key.user == user)
+              = link_to [ssh_key], method: :delete, data: { confirm: 'You sure, homie? This will delete the KEY!' } do
+                %i.fa.fa-trash

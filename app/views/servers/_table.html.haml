@@ -1,0 +1,13 @@
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Identifier
+        %th Host
+    %tbody
+      - servers.each do |server|
+        = content_tag :tr, id: dom_id(server), class: dom_class(server) do
+          %td
+            = link_to server.identifier, server
+          %td
+            = server.full_address
