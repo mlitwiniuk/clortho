@@ -3,6 +3,8 @@
     %thead
       %tr
         %th Identifier
+        - if defined?(show_user) && show_user
+          %th User
         %th SSH Key
         %th
     %tbody
@@ -10,8 +12,10 @@
         = content_tag :tr, id: dom_id(ssh_key), class: dom_class(ssh_key) do
           %td
             = ssh_key.identifier
+          - if defined?(show_user) && show_user
+            %td= ssh_key.user
           %td
             %pre= ssh_key.key
           %td
-            = link_to [ssh_key.user, ssh_key], method: :delete, data: { confirm: 'You sure, homie?' } do
+            = link_to [ssh_key], method: :delete, data: { confirm: 'You sure, homie? This will delete the KEY!' } do
               %i.fa.fa-trash

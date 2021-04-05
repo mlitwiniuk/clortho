@@ -1,3 +1,4 @@
+# Fetches users public keys from trusted soure
 class SshKeys::SyncWithRemoteCommand
   prepend SimpleCommand
   include ActiveModel::Validations
@@ -12,7 +13,8 @@ class SshKeys::SyncWithRemoteCommand
       body = response.body.to_s
       keys = body.split("\n").map(&:strip)
       keys.each do |k|
-        @user.ssh_keys.find_or_create_by(key: k)
+        key = SshKey.find_or_create_by(key: k)
+        key.update(user: @user) if key.user.blank?
       end
     else
       errors.add(:base, "#{response.code} #{response.reason}")
@@ -22,6 +24,6 @@ class SshKeys::SyncWithRemoteCommand
   private
 
   def path
-    Settings.keyfile_url_pattern % {USERNAME: @user.username}
+    Settings.keyfile_url_pattern % { USERNAME: @user.username }
   end
 end

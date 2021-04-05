@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, except: %i[index new create]
 
   # GET /users
   def index
@@ -22,6 +22,7 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
+    @user.password = SecureRandom.alphanumeric(32)
 
     if @user.save
       redirect_to @user, notice: "User was successfully created."
@@ -43,6 +44,11 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     redirect_to users_url, notice: "User was successfully destroyed."
+  end
+
+  def sync_keys
+    SshKeys::SyncWithRemoteCommand.call(@user)
+    redirect_to @user, notice: 'Keys synchronized with remote'
   end
 
   private

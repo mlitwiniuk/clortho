@@ -1,0 +1,14 @@
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th User
+        %th
+    %tbody
+      - users.each do |user|
+        = content_tag :tr, id: dom_id(user), class: dom_class(user) do
+          %td= link_to user, user
+          %td
+            = link_to [:remove_user, @server, user_id: user.id], method: :delete, data: { confirm: 'This will remove user from server' } do
+              %i.fa.fa-trash
+

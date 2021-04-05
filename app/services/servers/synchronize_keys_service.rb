@@ -16,21 +16,10 @@ class Servers::SynchronizeKeysService
 
   def create_missing_keys
     @keys.each do |k|
-      ssh_key = SshKey.find_by_key(k)
-      if ssh_key
-        if ssh_key.user.present?
-          next if ssh_key.user.servers.member?(@server)
+      ssh_key = SshKey.find_or_create_by(key: k)
+      next if ssh_key.servers.member?(@server)
 
-          @server.users << ssh_key.user
-        else
-          next if ssh_key.servers.member?(@server)
-
-          @server.ssh_keys << ssh_key
-        end
-      else
-        ssh_key = SshKey.create!(key: k)
-        ssh_key.servers << @server
-      end
+      @server.ssh_keys << ssh_key
     end
   end
 

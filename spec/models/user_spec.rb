@@ -26,13 +26,12 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_unlock_token          (unlock_token) UNIQUE
 #
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  it { is_expected.to have_and_belong_to_many(:servers) }
+  it { is_expected.to have_many(:ssh_keys) }
 
   describe 'validations' do
-    it { is_expected.to have_many(:ssh_keys) }
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_uniqueness_of(:username) }
   end

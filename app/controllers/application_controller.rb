@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
+  before_action :authenticate_user!, unless: :devise_controller?
+
   layout :set_layout
   rescue_from Exception, with: :unknown_error if Rails.env.production?
-
   rescue_from StandardError, with: :unknown_error if Rails.env.production?
   rescue_from ActionController::RoutingError, with: :route_not_found if Rails.env.production?
   rescue_from ActionController::UnknownFormat, with: :bad_request if Rails.env.production?

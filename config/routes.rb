@@ -1,9 +1,19 @@
 Rails.application.routes.draw do
-  resources :servers
+  resources :servers do
+    member do
+      delete :remove_user
+      post :resync
+    end
+  end
+
   devise_for :users, controllers: {registrations: "users/registrations"}, path: "accounts"
+  resources :ssh_keys, only: %i[destroy]
   authenticated :user do
     resources :users do
       resources :ssh_keys, only: %i[new create destroy]
+      member do
+        get :sync_keys
+      end
     end
   end
 

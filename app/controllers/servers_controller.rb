@@ -1,5 +1,5 @@
 class ServersController < ApplicationController
-  before_action :set_server, only: [:show, :edit, :update, :destroy]
+  before_action :set_server, except: %i[index new create]
 
   # GET /servers
   def index
@@ -7,8 +7,7 @@ class ServersController < ApplicationController
   end
 
   # GET /servers/1
-  def show
-  end
+  def show; end
 
   # GET /servers/new
   def new
@@ -16,8 +15,7 @@ class ServersController < ApplicationController
   end
 
   # GET /servers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /servers
   def create
@@ -45,14 +43,28 @@ class ServersController < ApplicationController
     redirect_to servers_url, notice: 'Server was successfully destroyed.'
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_server
-      @server = Server.find(params[:id])
-    end
+  def resync
+    # TODO: move to background job
+    Servers::SynchronizeKeysService.new(@server).perform
 
-    # Only allow a list of trusted parameters through.
-    def server_params
-      params.require(:server).permit(:identifier, :host, :port, :user)
-    end
+    # TODO: active channel!!!
+    redirect_to @server, notice: 'Resync scheduled, reload page in a while'
+  end
+
+  def remove_user
+    @server.users.destroy(User.find(params[:user_id]))
+    redirect_to @server, notice: 'User successfully removed from server.'
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_server
+    @server = Server.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def server_params
+    params.require(:server).permit(:identifier, :host, :port, :user)
+  end
 end

@@ -18,6 +18,9 @@
   .card-header.justify-content-between
     %h3.card-title SSH Keys
     %span
+      = link_to sync_keys_user_path(@user), class: 'btn btn-link' do
+        Sync keys
+      \/
       = link_to [:new, @user, :ssh_key], class: 'btn btn-link' do
         New SSH key
   .card-body

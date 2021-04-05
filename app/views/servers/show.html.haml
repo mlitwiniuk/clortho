@@ -7,6 +7,9 @@
       \/
       = link_to edit_server_path(@server), class: 'btn btn-link' do
         Edit
+      \/
+      = link_to resync_server_path(@server), class: 'btn btn-link', method: :post do
+        Resync
   .card-body
     %dl.dl-horizontal
       %dt Identifier:
@@ -17,3 +20,15 @@
       %dd= @server.port
       %dt User:
       %dd= @server.user
+
+.card
+  .card-header.justify-content-between
+    %h3.card-title SSH Keys
+  .card-body
+    = render partial: 'ssh_keys/table', locals: { ssh_keys: @server.ssh_keys, show_user: true }
+
+.card
+  .card-header.justify-content-between
+    %h3.card-title Users
+  .card-body
+    = render partial: 'users_table', locals: { users: @server.users }

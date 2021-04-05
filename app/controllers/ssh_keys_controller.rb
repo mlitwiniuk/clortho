@@ -15,9 +15,9 @@ class SshKeysController < ApplicationController
   end
 
   def destroy
-    @ssh_key = @user.ssh_keys.find(params[:id])
+    @ssh_key = SshKey.find(params[:id])
     @ssh_key.destroy
-    redirect_to @user, notice: 'SSH key deleted'
+    redirect_back fallback_location: root_path, notice: 'SSH key deleted'
   end
 
   private

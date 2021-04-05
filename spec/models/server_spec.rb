@@ -14,7 +14,7 @@ require 'rails_helper'
 
 RSpec.describe Server, type: :model do
   it { is_expected.to have_and_belong_to_many(:ssh_keys) }
-  it { is_expected.to have_and_belong_to_many(:users) }
+  it { is_expected.to have_many(:users) }
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:host) }
@@ -32,15 +32,15 @@ RSpec.describe Server, type: :model do
   end
 
   describe '.plain_keys' do
+    let(:user) { create(:user) }
+
     it 'returns array of keysg' do
-      user = create(:user)
-      server.users << user
-      create(:ssh_key, user: user, key: 'user_key')
+      user_key = create(:ssh_key, user: user, key: 'user_key')
+      server.ssh_keys << user_key
       server_key = create(:ssh_key, key: 'server_key')
       server.ssh_keys << server_key
       a = %w[user_key server_key]
       expect(server.plain_keys).to eq(a)
     end
   end
-
 end

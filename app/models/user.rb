@@ -29,13 +29,11 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable, :lockable, :timeoutable,
-         :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :lockable, :timeoutable, :recoverable, :rememberable, :validatable
   devise :pwned_password unless Rails.env.test?
 
   ## ASSOCIATIONS
   has_many :ssh_keys, dependent: :destroy
-  has_and_belongs_to_many :servers
 
   ## VALIDATIONS
   validates :username, uniqueness: true, if: :username?

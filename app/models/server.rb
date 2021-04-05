@@ -19,15 +19,12 @@ class Server < ApplicationRecord
   ## ATTRIBUTES & RELATED
   ## ASSOCIATIONS
   has_and_belongs_to_many :ssh_keys
-  has_and_belongs_to_many :users
-  has_many :user_keys, class_name: 'SshKey', through: :users, source: :ssh_keys
+  has_many :users, -> { distinct }, through: :ssh_keys
 
   ## VALIDATIONS
-  validates :host, :identifier, :user,
-            presence: true
-  validates :port,
-            presence: true,
-            numericality: { only_integer: true, greater_than: 0 }
+  validates :host, :identifier, :user, presence: true
+  validates :port, presence: true, numericality: { only_integer: true, greater_than: 0 }
+
   ## CALLBACKS
   ## OTHER
 
@@ -40,7 +37,7 @@ class Server < ApplicationRecord
   end
 
   def plain_keys
-    user_keys.pluck(:key) | ssh_keys.pluck(:key)
+    ssh_keys.pluck(:key)
   end
 
   private
