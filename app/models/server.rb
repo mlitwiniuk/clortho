@@ -29,6 +29,10 @@ class Server < ApplicationRecord
   ## CALLBACKS
   ## OTHER
 
+  def to_s
+    "#{identifier} (#{full_address})"
+  end
+
   def full_address
     "#{user}@#{host}:#{port}"
   end

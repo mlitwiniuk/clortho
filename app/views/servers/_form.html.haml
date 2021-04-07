@@ -8,16 +8,16 @@
         - server.errors.full_messages.each do |message|
           %li= message
   .mb-2
-    = form.label :identifier
+    = form.label :identifier, class: 'form-label'
     = form.text_field :identifier, class: 'form-control'
   .mb-2
-    = form.label :host
+    = form.label :host, class: 'form-label'
     = form.text_field :host, class: 'form-control'
   .mb-2
-    = form.label :port
+    = form.label :port, class: 'form-label'
     = form.text_field :port, class: 'form-control'
   .mb-2
-    = form.label :user
+    = form.label :user, class: 'form-label'
     = form.text_field :user, class: 'form-control'
   .form-footer
     .d-flex.justify-content-between

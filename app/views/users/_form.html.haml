@@ -8,11 +8,11 @@
         - user.errors.full_messages.each do |message|
           %li= message
   .mb-2
-    = form.label :email
+    = form.label :email, class: 'form-label'
     = form.text_field :email, class: 'form-control'
   .mb-2
-    = form.label :username
-    = form.text_field :username, class: 'form-control'
+    = form.label :username, class: 'form-label'
+    = form.text_field :username, class: 'form-control', placeholder: "must match #{Settings.keyfile_url_pattern}"
   .form-footer
     .d-flex.justify-content-between
       - if user.persisted?
