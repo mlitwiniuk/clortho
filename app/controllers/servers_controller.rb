@@ -85,6 +85,6 @@ class ServersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def server_params
-    params.require(:server).permit(:identifier, :host, :port, :user)
+    params.require(:server).permit(:identifier, :host, :port, :user, :authorized_keys_file)
   end
 end

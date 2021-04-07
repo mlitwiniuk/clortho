@@ -19,6 +19,9 @@
   .mb-2
     = form.label :user, class: 'form-label'
     = form.text_field :user, class: 'form-control'
+  .mb-2
+    = form.label :authorized_keys_file, class: 'form-label'
+    = form.text_field :authorized_keys_file, class: 'form-control'
   .form-footer
     .d-flex.justify-content-between
       - if server.persisted?

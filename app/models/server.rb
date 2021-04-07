@@ -5,6 +5,7 @@
 # Table name: servers
 #
 #  id                   :bigint           not null, primary key
+#  authorized_keys_file :string           default("authorized_keys")
 #  host                 :string
 #  identifier           :string
 #  last_synchronized_at :datetime
@@ -23,7 +24,7 @@ class Server < ApplicationRecord
   has_many :users, -> { distinct }, through: :ssh_keys
 
   ## VALIDATIONS
-  validates :host, :identifier, :user, presence: true
+  validates :host, :identifier, :user, :authorized_keys_file, presence: true
   validates :port, presence: true, numericality: { only_integer: true, greater_than: 0 }
 
   ## CALLBACKS

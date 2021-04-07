@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_100554) do
+ActiveRecord::Schema.define(version: 2021_04_07_103150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2021_04_07_100554) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "last_synchronized_at"
+    t.string "authorized_keys_file", default: "authorized_keys"
   end
 
   create_table "servers_ssh_keys", id: false, force: :cascade do |t|

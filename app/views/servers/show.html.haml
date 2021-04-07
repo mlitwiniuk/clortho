@@ -20,6 +20,9 @@
       %dd= @server.port
       %dt User:
       %dd= @server.user
+      %dt Authorized keys file:
+      %dd
+        %code= @server.authorized_keys_file
       %dt Last synchronized at:
       %dd= l(@server.last_synchronized_at) if @server.last_synchronized_at
 

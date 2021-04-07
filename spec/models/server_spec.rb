@@ -3,6 +3,7 @@
 # Table name: servers
 #
 #  id                   :bigint           not null, primary key
+#  authorized_keys_file :string           default("authorized_keys")
 #  host                 :string
 #  identifier           :string
 #  last_synchronized_at :datetime
@@ -23,6 +24,7 @@ RSpec.describe Server, type: :model do
     it { is_expected.to validate_presence_of(:port) }
     it { is_expected.to validate_numericality_of(:port).only_integer.is_greater_than(0) }
     it { is_expected.to validate_presence_of(:user) }
+    it { is_expected.to validate_presence_of(:authorized_keys_file) }
   end
 
   let(:server) { create(:server) }
