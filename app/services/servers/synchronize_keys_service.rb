@@ -10,6 +10,7 @@ class Servers::SynchronizeKeysService
     fetch_existing_keys
     create_missing_keys
     upload_keys
+    @server.touch(:last_synchronized_at)
   end
 
   def fetch_existing_keys

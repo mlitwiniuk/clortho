@@ -20,6 +20,8 @@
       %dd= @server.port
       %dt User:
       %dd= @server.user
+      %dt Last synchronized at:
+      %dd= l(@server.last_synchronized_at) if @server.last_synchronized_at
 
 .card.mb-3
   .card-header.justify-content-between

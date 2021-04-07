@@ -2,13 +2,14 @@
 #
 # Table name: servers
 #
-#  id         :bigint           not null, primary key
-#  host       :string
-#  identifier :string
-#  port       :integer          default(22)
-#  user       :string           default("deploy")
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                   :bigint           not null, primary key
+#  host                 :string
+#  identifier           :string
+#  last_synchronized_at :datetime
+#  port                 :integer          default(22)
+#  user                 :string           default("deploy")
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
 #
 FactoryBot.define do
   factory :server do
