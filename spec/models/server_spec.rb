@@ -39,8 +39,9 @@ RSpec.describe Server, type: :model do
       server.ssh_keys << user_key
       server_key = create(:ssh_key, :second, user: nil)
       server.ssh_keys << server_key
-      a = [user_key.key, server_key.key]
-      expect(server.plain_keys).to eq(a)
+      key_not_added_directly = create(:ssh_key, :rsa1024, user: user)
+      a = [user_key.key, server_key.key, key_not_added_directly.key]
+      expect(server.plain_keys).to contain_exactly(*a)
     end
   end
 end

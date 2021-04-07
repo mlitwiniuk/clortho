@@ -37,7 +37,8 @@ class Server < ApplicationRecord
   end
 
   def plain_keys
-    ssh_keys.pluck(:key)
+    user_keys = users.map(&:ssh_keys).flatten
+    (user_keys | ssh_keys.to_a).uniq.map(&:key).flatten
   end
 
   private

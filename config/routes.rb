@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :servers do
     member do
+      delete :remove_key
       delete :remove_user
+      post :add_user
       post :resync
     end
   end

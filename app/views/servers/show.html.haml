@@ -25,10 +25,16 @@
   .card-header.justify-content-between
     %h3.card-title SSH Keys
   .card-body
-    = render partial: 'ssh_keys/table', locals: { ssh_keys: @server.ssh_keys, show_user: true }
+    = render partial: 'ssh_keys/table', locals: { ssh_keys: @server.ssh_keys, show_user: true, server: @server }
 
 .card
   .card-header.justify-content-between
     %h3.card-title Users
+    = form_tag add_user_server_path(@server) do
+      = label_tag 'user_id', 'Add new user:'
+      = select_tag 'user_id', options_from_collection_for_select(@available_users, "id", "to_s"), include_blank: true
+      = submit_tag 'Add', class: 'btn btn-danger btn-sm', data: { disable_with: 'adding...', confirm: 'Are you sure?'}
   .card-body
     = render partial: 'users_table', locals: { users: @server.users }
+
+

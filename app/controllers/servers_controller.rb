@@ -7,7 +7,9 @@ class ServersController < ApplicationController
   end
 
   # GET /servers/1
-  def show; end
+  def show
+    @available_users = User.where.not(id: @server.user_ids)
+  end
 
   # GET /servers/new
   def new
@@ -48,12 +50,30 @@ class ServersController < ApplicationController
     Servers::SynchronizeKeysService.new(@server).perform
 
     # TODO: active channel!!!
-    redirect_to @server, notice: 'Resync scheduled, reload page in a while'
+    redirect_to @server, notice: 'Resync done'
+  end
+
+  def remove_key
+    ssh_key = SshKey.find(params[:ssh_key_id])
+    @server.ssh_keys.destroy(ssh_key)
+    Servers::SynchronizeKeysService.new(@server, removed_key: ssh_key).perform
+    redirect_to @server, notice: 'SSH Key successfully removed from server.'
   end
 
   def remove_user
-    @server.users.destroy(User.find(params[:user_id]))
+    user = User.find(params[:user_id])
+    @server.ssh_keys.destroy(user.ssh_keys.to_a)
+    Servers::SynchronizeKeysService.new(@server, removed_user: user).perform
     redirect_to @server, notice: 'User successfully removed from server.'
+  end
+
+  def add_user
+    redirect_to @server && return unless params[:user_id].present?
+
+    user = User.find(params[:user_id])
+    @server.ssh_keys << user.ssh_keys
+    Servers::SynchronizeKeysService.new(@server).perform
+    redirect_to @server, notice: 'User successfully added to server.'
   end
 
   private

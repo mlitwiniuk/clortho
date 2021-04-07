@@ -15,8 +15,12 @@
           - if defined?(show_user) && show_user
             %td= ssh_key.user
           %td
-            %pre= ssh_key.key
+            %pre{title: ssh_key.key}= ssh_key.fingerprint
           %td
-            - if ssh_key.user.blank? || (defined?(user) && ssh_key.user == user)
+            - if ssh_key.user.blank? && defined?(server) && server
+              = link_to remove_key_server_path(server, ssh_key_id: ssh_key.id), method: :delete, data: { confirm: 'You sure, homie? This will delete the KEY!' } do
+                %i.fa.fa-trash
+            - elsif (defined?(user) && ssh_key.user == user)
               = link_to [ssh_key], method: :delete, data: { confirm: 'You sure, homie? This will delete the KEY!' } do
                 %i.fa.fa-trash
+
