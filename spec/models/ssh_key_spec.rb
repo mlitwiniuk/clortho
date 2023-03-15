@@ -16,6 +16,10 @@
 #  index_ssh_keys_on_fingerprint  (fingerprint) UNIQUE
 #  index_ssh_keys_on_user_id      (user_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
+#
 require 'rails_helper'
 
 RSpec.describe SshKey, type: :model do
