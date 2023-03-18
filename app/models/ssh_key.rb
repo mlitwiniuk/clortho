@@ -45,6 +45,13 @@ class SshKey < ApplicationRecord
     identifier
   end
 
+  def suffix
+    last_part = key.split(' ').last
+    return nil unless last_part.include?('@')
+
+    last_part
+  end
+
   def self.find_by_key(key)
     fingerprint = ::SSHKey.fingerprint key
     find_by(fingerprint: fingerprint)
@@ -78,10 +85,11 @@ class SshKey < ApplicationRecord
   end
 
   def fill_in_identifier
-    return if identifier.present?
+    return if identifier.present? && !user_id_changed?
 
     scope = user.present? ? user.ssh_keys : SshKey.where(user_id: nil)
     last_id = scope.last&.identifier&.split(' ')&.last.to_i
-    self.identifier = "Key #{last_id + 1}"
+    anonymous = user.blank? ? 'Anonymous' : nil
+    self.identifier = [anonymous, "Key", last_id + 1].compact.join(' ')
   end
 end

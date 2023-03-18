@@ -80,6 +80,22 @@ RSpec.describe SshKey, type: :model do
       expect(key.identifier).to eq('Key 1')
     end
 
+    it "fills in identifier if it's blank and user is missing" do
+      key = build(:ssh_key, user: nil)
+      expect(key.identifier).to be_blank
+      key.valid?
+      expect(key).to be_valid
+      expect(key.identifier).to eq('Anonymous Key 1')
+    end
+
+    it "renames key when it's assigned to user" do
+      key = build(:ssh_key, user: nil)
+      key.save
+      expect(key.identifier).to eq('Anonymous Key 1')
+      key.update(user: user)
+      expect(key.reload.identifier).to eq('Key 1')
+    end
+
     it 'avoid same names' do
       first = create(:ssh_key, user: user)
       second = create(:ssh_key, :second, user: user)
