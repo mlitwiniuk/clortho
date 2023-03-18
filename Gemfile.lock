@@ -175,6 +175,7 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
+    foreman (0.87.2)
     friendly_id (5.5.0)
       activerecord (>= 4.0.0)
     globalid (1.1.0)
@@ -434,6 +435,7 @@ DEPENDENCIES
   ed25519
   erb2haml (~> 0.1.5)
   factory_bot_rails
+  foreman
   friendly_id (~> 5.4)
   haml (~> 5.2)
   http
