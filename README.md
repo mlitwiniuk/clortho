@@ -26,6 +26,10 @@ $ dip rails s
 
 Just start it. To fetch keys from other source than GitHub change `config/settings.yml` file (or overwrite in `config/settings/{env}.yml`).
 
+## Demo
+
+[![Watch the video](https://img.youtube.com/vi/8DTsnJs8ZJM/default.jpg)](https://youtu.be/8DTsnJs8ZJM)
+
 ## Security
 
 For now - absolutely none. App only (by default) binds to localhost, so until you change something, it will be accessible only from you local machine. Nonetheless it is not meant to be run permanenly - if you need it, start it, use it, then shut it down.
