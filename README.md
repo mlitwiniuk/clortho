@@ -5,15 +5,26 @@
 
 Simple app allowing you to manage SSH keys on servers you have access to. It is **not meant** to be hosted anywhere (at least not for now). Connection is done using [SSHKit](https://github.com/capistrano/sshkit).
 
+Users public keys are fetched from configurable source, by default from Github (eg. https://github.com/mlitwiniuk.keys)
+
 
 ## Installation
 
-It's a standard ruby app. If you don't know what to do, please wait for Dockerfile to come (to be added next).
+It's a standard ruby app. To ease initial setup, development environment is aided via [dip](https://github.com/bibendi/dip). To start install dip, have docker running and execute:
+
+```
+$ dip provision
+# within the output you'll get password for first created user, it's login is going to be test@clortho.dev
+
+$ dip rails s
+```
+
+**Warning:** contenerized env (as well as regular app) will have access to your `~/.ssh` folder - it's required to read your public key used to connect to servers
 
 
 ## Usage
 
-Just start it. To fetch keys from other source than GitHub change `config/settings.yml` file (or overwrite in `config/settings/{env}.yml`). First users needs to be created by hand from Rails console.
+Just start it. To fetch keys from other source than GitHub change `config/settings.yml` file (or overwrite in `config/settings/{env}.yml`).
 
 ## Security
 
@@ -21,10 +32,10 @@ For now - absolutely none. App only (by default) binds to localhost, so until yo
 
 ## ToDo
 
-- [ ] Dockerfile
+- [x] Dockerfile
 - [ ] db encryption?
 - [ ] server groups
 - [ ] (better) error handling
-- [ ] possibility to execute commands in backgroun
+- [ ] possibility to execute commands in the background
 
 
